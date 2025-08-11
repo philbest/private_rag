@@ -50,7 +50,12 @@ class AskBody(BaseModel):
 
 def build_context(query: str):
     q_emb = embedder.encode([query], normalize_embeddings=True)[0]
-    results = collection.query(query_embeddings=[q_emb], n_results=TOP_K, include=["documents", "metadatas", "distances"])
+    q_emb = q_emb.tolist()  # <<< IMPORTANT
+    results = collection.query(
+        query_embeddings=[q_emb],   # liste de listes
+        n_results=TOP_K,
+        include=["documents", "metadatas", "distances"],
+    )
     docs = results.get("documents", [[]])[0]
     metas = results.get("metadatas", [[]])[0]
     ctx_parts, citations = [], []
