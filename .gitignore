@@ -9,3 +9,4 @@ index/
 .hf-cache/
 # fichiers temporaires macOS
 .DS_Store
+llama_models/mistral-7b-instruct-v0.2.Q4_K_M.gguf
