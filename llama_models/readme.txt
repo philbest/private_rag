@@ -1,0 +1,3 @@
+télécharger ici le llm
+
+ex : mistral-7b-instruct-v0.2.Q4_K_M.gguf
