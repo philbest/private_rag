@@ -1,0 +1,14 @@
+# environnements
+.venv/
+.env
+*.log
+__pycache__/
+
+# données et index (NE PAS pousser)
+docs/
+ingested/
+index/
+.hf-cache/
+models/
+# fichiers temporaires macOS
+.DS_Store
