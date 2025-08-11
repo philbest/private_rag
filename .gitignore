@@ -5,10 +5,8 @@
 __pycache__/
 
 # données et index (NE PAS pousser)
-docs/
-ingested/
 index/
 .hf-cache/
-models/
+llama_models/*
 # fichiers temporaires macOS
 .DS_Store
