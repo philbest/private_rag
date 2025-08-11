@@ -50,6 +50,17 @@ fastapi
 
 ---
 
+### 2. Lancer le server + webui
+```bash
+./server.sh
+```
+
+```bash
+./start-webui.sh
+```
+
+
+
 ## 📥 Ingestion de documents
 
 1. Placez vos fichiers dans `docs/` :
