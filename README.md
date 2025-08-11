@@ -50,7 +50,7 @@ fastapi
 
 ---
 
-### 2. Lancer le server + webui
+### 3. Lancer le server + webui
 ```bash
 ./server.sh
 ```
