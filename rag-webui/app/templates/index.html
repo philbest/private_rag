@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RAG perso (local)</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>RAG perso (local)</h1>
+    <p class="muted">Tes documents restent en local. Assure-toi que <code>llama-server</code> tourne (port 8000) et que l'index est créé.</p>
+
+    <form id="ask-form">
+      <label for="question">Question</label>
+      <textarea id="question" rows="3" placeholder="Ex: Quel est mon salaire brut sur mon contrat de 2023 ?"></textarea>
+      <button type="submit">Poser la question</button>
+    </form>
+
+    <div id="result" class="card" hidden>
+      <h2>Réponse</h2>
+      <pre id="answer"></pre>
+      <div id="sources" class="sources"></div>
+    </div>
+  </div>
+
+<script>
+const form = document.getElementById('ask-form');
+const questionEl = document.getElementById('question');
+const resultEl = document.getElementById('result');
+const answerEl = document.getElementById('answer');
+const sourcesEl = document.getElementById('sources');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const q = questionEl.value.trim();
+  if (!q) return;
+
+  answerEl.textContent = "⏳ Réflexion en cours...";
+  sourcesEl.textContent = "";
+  resultEl.hidden = false;
+
+  try {
+    const r = await fetch('/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: q })
+    });
+    if (!r.ok) {
+      const err = await r.json();
+      answerEl.textContent = "Erreur: " + (err.detail || r.statusText);
+      return;
+    }
+    const data = await r.json();
+    answerEl.textContent = data.answer || "(pas de réponse)";
+    if (data.sources && data.sources.length) {
+      sourcesEl.innerHTML = "<b>Sources:</b> " + data.sources.map(s => `<span class="pill">${s}</span>`).join(" ");
+    } else {
+      sourcesEl.textContent = "";
+    }
+  } catch (err) {
+    answerEl.textContent = "Erreur réseau: " + err;
+  }
+});
+</script>
+</body>
+</html>
